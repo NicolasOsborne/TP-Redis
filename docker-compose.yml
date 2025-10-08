@@ -1,33 +1,35 @@
 version: '3.8'
 
 services:
-  # Service de l'application de chat Node.js
-  chat-app:
-    build: . # Utilise le Dockerfile dans le répertoire courant
-    container_name: chat-app
+  # 1. Instance 1 du serveur de chat (sur le port hôte 3000)
+  chat-app-1:
+    build: .
     ports:
-      - '3000:3000' # Mappe le port 3000 du conteneur au port 3000 de l'hôte
+      - '3000:3000' # Hôte 3000 -> Conteneur 3000
     depends_on:
-      - redis # Assure que Redis démarre avant l'application
+      - redis
     environment:
-      # Optionnel: définir l'hôte Redis via une variable d'environnement pour plus de flexibilité
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-    # Optionnel: Monter le code pour un rechargement à chaud (Hot Reload) en développement
-    # volumes:
-    #   - .:/usr/src/app
-    #   - /usr/src/app/node_modules
+      PORT: 3000 # Le port interne à écouter
 
-  # Service de la base de données Redis (utilise l'image officielle)
+  # 2. Instance 2 du serveur de chat (sur le port hôte 3001)
+  chat-app-2:
+    build: .
+    ports:
+      - '3001:3000' # Hôte 3001 -> Conteneur 3000 (Le conteneur écoute toujours sur 3000)
+    depends_on:
+      - redis
+    environment:
+      PORT: 3000 # Le port interne à écouter
+
+  # Service de la base de données Redis
   redis:
     image: redis/redis-stack-server:latest
     container_name: chat-redis
     ports:
-      - '6379:6379' # Expose le port pour le débogage (optionnel)
+      - '6379:6379'
     volumes:
-      - redis-data:/data # Volume pour persister les données de Redis (même si c'est pour un chat)
+      - redis-data:/data
 
-# Définition des volumes
 volumes:
   redis-data:
     driver: local
