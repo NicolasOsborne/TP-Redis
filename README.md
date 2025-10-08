@@ -40,4 +40,5 @@ npm install
 node index.js
 ```
 
-- Accéder à l'application à l'addresse http://localhost:3000
+- L'application se lance sur deux instances du serveur
+- Accéder à l'application à l'addresse http://localhost:3000 et http://localhost:3001 dans deux onglets différents pour tester les deux instances
