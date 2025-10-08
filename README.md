@@ -12,6 +12,7 @@ En partant d'une application de chat développée avec Node.js, Express et Socke
 
 ## Technologies utilisées
 
+- Docker et Docker Compose
 - Node.js et Express
 - Socket.IO
 - HTML, CSS et Vanilla JS
@@ -19,6 +20,13 @@ En partant d'une application de chat développée avec Node.js, Express et Socke
 ## Lancer l'application
 
 - S'assurer d'avoir Node.js d'installé
+- Avoir Docker et Docker Compose installés
+
+- Lancer Docker :
+
+```bash
+docker compose up -d
+```
 
 - Installer les dépendances :
 

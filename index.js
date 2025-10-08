@@ -3,9 +3,17 @@ const http = require('http')
 const { Server } = require('socket.io')
 const path = require('path')
 
+const { createAdapter } = require('@socket.io/redis-adapter')
+const ioredis = require('ioredis')
+
 const app = express()
 const server = http.createServer(app)
+
+const pubClient = new ioredis({ host: 'redis', port: 6379 })
+const subClient = pubClient.duplicate()
+
 const io = new Server(server)
+io.adapter(createAdapter(pubClient, subClient))
 
 const activeRooms = new Map()
 
