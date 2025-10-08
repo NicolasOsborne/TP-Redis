@@ -15,18 +15,38 @@ En partant d'une application de chat développée avec Node.js, Express et Socke
 - Docker et Docker Compose
 - Node.js et Express
 - Socket.IO
+- Redis
 - HTML, CSS et Vanilla JS
 
 ## Lancer l'application
 
-- S'assurer d'avoir Node.js d'installé
+### Avec Docker :
+
 - Avoir Docker et Docker Compose installés
 
-- Lancer Docker :
+- Lancer une instance Docker de Redis :
+```bash
+docker run --name my-redis -p 6379:6379 -d redis/redis-stack-server:latest
+```
+
+- Lancer le projet :
 
 ```bash
 docker compose up -d
 ```
+
+- L'application se lance sur deux instances du serveur
+- Accéder à l'application à l'addresse http://localhost:3000 et http://localhost:3001 dans deux onglets différents pour tester les deux instances
+
+### En local :
+- S'assurer d'avoir Node.js d'installé
+
+- Lancer une instance Docker de Redis :
+```bash
+docker run --name my-redis -p 6379:6379 -d redis/redis-stack-server:latest
+```
+
+- Dans le directory du projet :
 
 - Installer les dépendances :
 
@@ -36,8 +56,14 @@ npm install
 
 - Lancer l'application :
 
+- Dans un premier terminal (pour lancer une instance sur le port 3000) :
 ```bash
 node index.js
+```
+
+- Dans un second terminal (pour lancer une seconde instance sur le port 3001) :
+```bash
+PORT=3001 node server.js
 ```
 
 - L'application se lance sur deux instances du serveur
